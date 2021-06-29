@@ -1,0 +1,68 @@
+cat /proc/cpuinfo  ##cpu MHz cache
+cat /etc/resolv.conf ## dns?
+df -h ##sda3
+free -m ## оперативка
+ip a
+ip route ##gateway
+
+
+dop_PO
+apk add: 
+	curl
+	make 
+	git
+git clone https://github.com/bu1basaurus/exam.git
+curl https://ftp.postgresql.org/pub/source/v13.2/postgresql-13.2.tar.gz > portgresql-13.2.tar.gz  
+./configure
+make
+install ## make install
+
+adduser postgres
+su - postgres
+nano ~/.profile 
+		
+		export PGDATA=/home/postgres/pgdata
+		export PATH=$PATH:/usr/local/pgsql/bin
+
+initdb -k /home/postgres/data
+pg_ctl start -l ~/log.txt
+createdb db
+
+##psql:
+	CREATE ROLE myuser WITH LOGIN 
+
+
+tables script: name_.sql
+	DROP SCHEMA IF EXISTS data CASCADE;
+	CREATE SCHEMA data;
+
+	CEATE TABLE data.(name of table)(
+		name int\double precision\varchar(number) null\not null,
+ 		name int\double precision\varchar(number) null\not null,
+	);
+
+
+insert script: name2_.sql
+	DELETE FROM data.(name of table);
+	INSERT INTO data.(name of table) (field_1, field_2, ... field_n) VALUES
+		('value_in_field_1', 'value_in_field_2', ... 'value_in_field_n'),
+		('value_in_field_1', 'value_in_field_2', ... 'value_in_field_n');
+
+relations script: name3_.sql
+	ALTER TABLE data.(name_of_table) ADD PRIMARY KEY (primary field);
+	ALTER TABLE data.(name_of_table1) ADD FOREIGN KEY(field) REFERENCES data.(name_of_table)(field2);
+
+psql -f name_of_script.sql
+
+root:
+backups: backup.sh
+"/usr/local/pgsql/bin/pg_dump@ -U postgres -d db > /home/postgres/store/backup_$(date "+%Y-%m-%d_%H-%M-%S").sql
+chmod +x backup.sh
+
+crontab -e
+	##	*/10	*	*	*	* sh /home/postgres/backup.sh ##every 10 minutes
+pg_ctl stop -m fast ##stop server
+
+	#request from database:
+psql
+select * from (name of table);
