@@ -10,16 +10,28 @@ dop_PO
 apk add: 
 	curl
 	make 
-	git
+	gcc
+	tar
+	gzip
+	##ostalnoe xz, dazhe gzip ne nado vrode
+	( libc-dev
+	linux-headers
+	readline
+	zlib
+	readline-dev 
+	zlib-dev )
+
+	
+apk add git
 git clone https://github.com/bu1basaurus/exam.git
 curl https://ftp.postgresql.org/pub/source/v13.2/postgresql-13.2.tar.gz > portgresql-13.2.tar.gz  
 ./configure
 make
-install ## make install
+make install
 
 adduser postgres
 su - postgres
-nano ~/.profile 
+nano ~/.profile (mb root)
 		
 		export PGDATA=/home/postgres/pgdata
 		export PATH=$PATH:/usr/local/pgsql/bin
